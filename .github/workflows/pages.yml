@@ -1,12 +1,13 @@
-name: Verify and publish SpoonMate authorization
+name: Build, verify and publish SpoonMate authorization
 
 on:
   push:
     branches: [main]
     paths:
-      - authorization-envelope.json
+      - config/users.json
       - authorization-public-key.pem
       - index.html
+      - scripts/build-authorization.mjs
       - scripts/verify-authorization.mjs
       - .github/workflows/pages.yml
   workflow_dispatch:
@@ -21,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  verify-and-publish:
+  build-verify-publish:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -31,12 +32,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Build signed authorization envelope
+        env:
+          AUTHORIZATION_ED25519_PRIVATE_KEY_BASE64: ${{ secrets.AUTHORIZATION_ED25519_PRIVATE_KEY_BASE64 }}
+          AUTHORIZATION_REVISION: ${{ github.run_number }}
+        run: node scripts/build-authorization.mjs config/users.json authorization-public-key.pem _site/authorization-envelope.json
       - name: Verify Ed25519 signature and authorization schema
-        run: node scripts/verify-authorization.mjs authorization-envelope.json authorization-public-key.pem
+        run: node scripts/verify-authorization.mjs _site/authorization-envelope.json authorization-public-key.pem
       - name: Prepare public artifact
-        run: |
-          mkdir -p _site
-          install -m 0644 index.html authorization-envelope.json authorization-public-key.pem _site/
+        run: install -m 0644 index.html authorization-public-key.pem _site/
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload verified public artifact
@@ -46,4 +50,3 @@ jobs:
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
