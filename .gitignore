@@ -1,0 +1,9 @@
+# Local signing material must never enter this public repository.
+*.private.pem
+*.private.key
+*.secret.*
+.env
+.env.*
+node_modules/
+_site/
+
