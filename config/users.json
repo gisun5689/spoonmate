@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "application_id": "spoonmate",
-  "minimum_app_version": "2.0.15.3",
+  "minimum_app_version": "2.0.15.31",
   "users": [
     {
       "spoon_uid": "7673790",
       "enabled": true,
-      "expires_at": "2999-12-31"
-    }
+      "expires_at": "2999-12-31T23:59:59.999Z"
+    },
     {
       "spoon_uid": "1956351",
       "enabled": true,
