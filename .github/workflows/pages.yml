@@ -6,6 +6,7 @@ on:
     paths:
       - authorization-envelope.json
       - authorization-public-key.pem
+      - lite-update.json
       - index.html
       - scripts/verify-authorization.mjs
       - .github/workflows/pages.yml
@@ -33,10 +34,21 @@ jobs:
           node-version: 22
       - name: Verify Ed25519 signature and authorization schema
         run: node scripts/verify-authorization.mjs authorization-envelope.json authorization-public-key.pem
+      - name: Verify LITE update metadata
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('lite-update.json', 'utf8'));
+          if (data.schema_version !== 1) throw new Error('lite-update schema_version must be 1');
+          if (data.edition !== 'lite' || data.channel !== 'lite') throw new Error('lite-update edition/channel mismatch');
+          if (!/^\d+(?:\.\d+){3}$/.test(String(data.latest_display_version || ''))) throw new Error('invalid latest_display_version');
+          if (!/^\d+\.\d+\.\d+$/.test(String(data.latest_internal_version || ''))) throw new Error('invalid latest_internal_version');
+          if (typeof data.published !== 'boolean') throw new Error('published must be boolean');
+          NODE
       - name: Prepare public artifact
         run: |
           mkdir -p _site
-          install -m 0644 index.html authorization-envelope.json authorization-public-key.pem _site/
+          install -m 0644 index.html authorization-envelope.json authorization-public-key.pem lite-update.json _site/
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload verified public artifact
@@ -46,4 +58,3 @@ jobs:
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
