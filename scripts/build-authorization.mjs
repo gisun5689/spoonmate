@@ -58,8 +58,15 @@ const privateKeyBase64 = String(process.env.AUTHORIZATION_ED25519_PRIVATE_KEY_BA
 if (!/^[A-Za-z0-9+/]+={0,2}$/.test(privateKeyBase64) || privateKeyBase64.length % 4 !== 0) {
     fail('AUTHORIZATION_ED25519_PRIVATE_KEY_BASE64 is missing or invalid.');
 }
-const privateKeyPem = Buffer.from(privateKeyBase64, 'base64').toString('utf8');
-const privateKey = crypto.createPrivateKey(privateKeyPem);
+const privateKeyDer = Buffer.from(privateKeyBase64, 'base64');
+if (privateKeyDer.toString('base64') !== privateKeyBase64) {
+    fail('AUTHORIZATION_ED25519_PRIVATE_KEY_BASE64 is not canonical Base64.');
+}
+const privateKey = crypto.createPrivateKey({
+    key: privateKeyDer,
+    format: 'der',
+    type: 'pkcs8'
+});
 if (privateKey.asymmetricKeyType !== 'ed25519') fail('Private key must be Ed25519.');
 
 const expectedPublicKey = crypto.createPublicKey(fs.readFileSync(publicKeyPath, 'utf8'));
