@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "application_id": "spoonmate",
+  "minimum_app_version": "2.0.15.31",
+  "users": [
+    {
+      "spoon_uid": "7673790",
+      "enabled": true,
+      "expires_at": "2027-12-31T23:59:59.999Z"
+    },
+    {
+      "spoon_uid": "9126214",
+      "enabled": true,
+      "expires_at": null
+    },
+    {
+      "spoon_uid": "10180849",
+      "enabled": true,
+      "expires_at": null
+    },
+    {
+      "spoon_uid": "1956351",
+      "enabled": true,
+      "expires_at": null
+    }
+  ]
+}
