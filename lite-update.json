@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "edition": "lite",
+  "channel": "lite",
+  "latest_display_version": "2.0.15.31",
+  "latest_internal_version": "2.0.1531",
+  "release_tag": "v2.0.15.31",
+  "release_page_url": "https://github.com/gisun5689/spoonmate/releases",
+  "published": false,
+  "updated_at": "2026-08-07T13:20:00.000Z"
+}
