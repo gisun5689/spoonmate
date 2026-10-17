@@ -2,10 +2,10 @@
   "schema_version": 1,
   "edition": "lite",
   "channel": "lite",
-  "latest_display_version": "2.0.15.95",
-  "latest_internal_version": "2.0.1595",
-  "release_tag": "v2.0.15.95",
-  "release_page_url": "https://github.com/gisun5689/spoonmate/releases/tag/v2.0.15.95",
+  "latest_display_version": "2.0.15.96",
+  "latest_internal_version": "2.0.1596",
+  "release_tag": "v2.0.15.96",
+  "release_page_url": "https://github.com/gisun5689/spoonmate/releases/tag/v2.0.15.96",
   "published": true,
-  "updated_at": "2026-10-06T07:54:09.173Z"
+  "updated_at": "2026-10-17T04:09:37.375Z"
 }
