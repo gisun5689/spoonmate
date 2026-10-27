@@ -7,6 +7,7 @@ on:
       - config/users.json
       - authorization-public-key.pem
       - lite-update.json
+      - general-update.json
       - index.html
       - scripts/build-authorization.mjs
       - scripts/verify-authorization.mjs
@@ -72,10 +73,21 @@ jobs:
           }
           NODE
 
+      - name: Verify general no-auth update metadata
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('general-update.json', 'utf8'));
+          if (data.schema_version !== 1 || data.edition !== 'dev' || data.channel !== 'dev') throw new Error('general update channel mismatch');
+          if (!/^\d+(?:\.\d+){3}$/.test(String(data.latest_display_version || ''))) throw new Error('invalid general display version');
+          if (!/^\d+\.\d+\.\d+$/.test(String(data.latest_internal_version || ''))) throw new Error('invalid general internal version');
+          if (typeof data.published !== 'boolean') throw new Error('general published must be boolean');
+          NODE
+
       - name: Prepare public artifact
         run: |
           mkdir -p _site
-          install -m 0644 index.html authorization-public-key.pem lite-update.json _site/
+          install -m 0644 index.html authorization-public-key.pem lite-update.json general-update.json _site/
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
