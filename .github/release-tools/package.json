@@ -1,0 +1,11 @@
+{
+  "name": "spoonmate-lite-release-retention-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read-only public updater verification followed by guarded historical release unpublication",
+  "engines": { "node": ">=22.13.0" },
+  "dependencies": {
+    "builder-util": "26.15.3",
+    "electron-updater": "6.8.9"
+  }
+}

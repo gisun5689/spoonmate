@@ -1,0 +1,76 @@
+name: Verify Lite update and archive older releases
+
+on:
+  workflow_run:
+    workflows: ["Build, verify and publish SpoonMate authorization"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Expected newest Lite tag; blank uses the current main Lite update gate"
+        required: false
+        default: ""
+        type: string
+      verify_current:
+        description: "Fully verify downloads and real updater even if older releases are already drafts"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spoonmate-lite-release-promotion
+  cancel-in-progress: false
+
+jobs:
+  verify-and-retain-latest:
+    if: >-
+      github.repository == 'gisun5689/spoonmate' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        github.event.workflow_run.event != 'pull_request'))
+    runs-on: windows-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - name: Check out trusted main, never an upstream workflow artifact
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up the isolated release verifier
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: .github/release-tools/package-lock.json
+      - name: Install pinned verifier dependencies without package scripts
+        run: npm ci --prefix .github/release-tools --ignore-scripts --no-audit --no-fund
+      - name: Verify failure, race and idempotency guards before allowing changes
+        run: node --test tests/release-retention.test.cjs
+      - name: Verify the published Lite update before archiving older releases
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERIFY_CURRENT: ${{ inputs.verify_current }}
+        run: |
+          set -euo pipefail
+          args=(--apply --output "build/release-retention/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --wait-seconds 900)
+          if [[ -n "${RELEASE_TAG:-}" ]]; then args+=(--tag "$RELEASE_TAG"); fi
+          if [[ "${VERIFY_CURRENT:-false}" == "true" ]]; then args+=(--verify-current); fi
+          node .github/release-tools/retention.cjs "${args[@]}"
+      - name: Retain success or partial-failure evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lite-release-retention-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/release-retention/
+          if-no-files-found: warn
+          retention-days: 30
