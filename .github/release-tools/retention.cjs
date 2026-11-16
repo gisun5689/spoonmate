@@ -195,7 +195,10 @@ async function runRetention(options, adapter) {
     const seconds = options.waitSeconds ?? 0;
     guard(Number.isInteger(seconds) && seconds >= 0 && seconds <= 900, 'OPTIONS_INVALID', 'Pages wait must be between 0 and 900 seconds.');
     const repo = await adapter.getRepository();
-    guard(repo.full_name === REPOSITORY && repo.private === false && repo.visibility === 'public' && repo.permissions?.push === true, 'REPOSITORY_INVALID', 'Require write access to the established public SpoonMate repository.');
+    // Installation/GITHUB_TOKEN responses can omit user-style permissions.
+    // Never infer or grant access from this optional metadata: GitHub enforces
+    // the configured token's real ACL on every PATCH below.
+    guard(repo.full_name === REPOSITORY && repo.private === false && repo.visibility === 'public', 'REPOSITORY_INVALID', 'Require the established public SpoonMate repository.');
     const lite = await adapter.getGate('lite'), general = await adapter.getGate('general');
     const tag = options.tag || lite.value?.release_tag; parseVersion(tag); validateLiteGate(lite, tag); validateGeneralGate(general);
     const latest = await adapter.getLatest(); validateLatest(latest, tag);

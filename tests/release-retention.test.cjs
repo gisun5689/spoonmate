@@ -58,6 +58,20 @@ test('successful publication checks full payloads and real-updater adapter befor
   assert(adapter.calls.findIndex(call => call.name === 'patchDraft') > adapter.calls.findIndex(call => call.name === 'probeUpdater'));
   assert(adapter.evidence.has('before')); assert(adapter.evidence.has('fresh-verification')); assert(adapter.evidence.has('result'));
 });
+test('GitHub App repository metadata without user-style permissions supports the verified flow', async () => {
+  const adapter = new FixtureAdapter();
+  adapter.getRepository = async () => ({full_name: REPOSITORY, private: false, visibility: 'public'});
+  const result = await apply(adapter);
+  assert.equal(result.success, true); assert.equal(result.fresh_live_verification, true); assert.deepEqual(adapter.patches, [1107, 1106]); assert.equal(adapter.releases.get(1108).draft, false);
+});
+test('actual PATCH authorization denial fails without hiding history or leaking provider text', async () => {
+  const adapter = new FixtureAdapter();
+  adapter.getRepository = async () => ({full_name: REPOSITORY, private: false, visibility: 'public'});
+  adapter.patchDraft = async () => { adapter.event('patchDraft'); throw new Error('HTTP 403 PRIVATE_TOKEN_SENTINEL'); };
+  const result = await apply(adapter);
+  assertNoWrite(result, adapter, 'OPERATION_FAILED'); assert.equal(result.fresh_live_verification, true); assert.equal(result.hidden.length, 0); assert.equal(adapter.counts.patchDraft, 1);
+  assert.equal(adapter.releases.get(1107).draft, false); assert.equal(adapter.releases.get(1106).draft, false); assert.equal(adapter.releases.get(1108).draft, false); assert(!JSON.stringify(result).includes('PRIVATE_TOKEN_SENTINEL'));
+});
 test('default dry run fully verifies but never writes', async () => {
   const adapter = new FixtureAdapter(); const result = await runRetention({}, adapter);
   assert.equal(result.success, true); assert.equal(result.dry_run, true); assert.equal(result.planned.length, 2); assert.equal(adapter.patches.length, 0); assert.equal(adapter.releases.get(1107).draft, false);

@@ -24,6 +24,8 @@ An unrelated authorization-list update may also start the hook. With no older pu
 
 The workflow uses a job-scoped GitHub token with `contents: write`; it needs no new personal token or application login. Only trusted `main` is checked out. Upstream build artifacts and pull-request code are not executed.
 
+GitHub App tokens do not always include a user-style `permissions.push` flag in repository metadata. That optional display field is not used as an authorization decision. GitHub enforces the actual `contents: write` permission on every draft PATCH; a denied write stops the run without marking it successful.
+
 ## Operator checks
 
 Open GitHub **Actions → Verify Lite update and archive older releases**. Green means the recorded policy checks succeeded. A red run is not a complete promotion; inspect its retained `lite-release-retention-…` artifact.
