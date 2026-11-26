@@ -46,4 +46,3 @@ jobs:
           path: ${{ runner.temp }}/spoonmate-nsis-e2e-*/proofs/*.json
           if-no-files-found: error
           retention-days: 7
-
