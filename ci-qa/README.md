@@ -11,7 +11,7 @@ After root review, place these QA files plus the approved manifest in ci-qa/ of 
 approved commit in gisun5689/spoonmate, and place installer-e2e.workflow.yml in
 .github/workflows/installer-e2e.yml. Do not push or dispatch until separately
 approved. Dispatch requires both the immutable commit and exact manifest SHA-256.
-The workflow has contents:read only; it cannot publish or delete releases.
+The NSIS QA job needs contents:write to read draft releases; its pinned harness uses GET-only GitHub requests and strips workflow tokens from installer child processes.
 
 The harness refuses anything except a GitHub-hosted Windows image, runneradmin,
 manual workflow_dispatch, the exact repository and approved commit. It aborts

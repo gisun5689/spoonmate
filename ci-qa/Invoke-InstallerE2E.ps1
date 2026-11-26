@@ -54,6 +54,9 @@ function RunFixture([string]$Exe,[string]$Arguments,[int]$Expected) {
     $psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$Exe;$psi.Arguments=$Arguments;$psi.UseShellExecute=$false;$psi.CreateNoWindow=$true
     $psi.WorkingDirectory=$script:root;$psi.Environment['TEMP']=Join-Path $script:root 'temp';$psi.Environment['TMP']=$psi.Environment['TEMP']
     if ([IO.Path]::GetFileName($Exe) -match '^v2\.0\.15\.[0-9]+\.exe$') { $script:installationAttempts++ }
+    foreach ($tokenName in @('GITHUB_TOKEN','GH_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN')) {
+        [void]$psi.Environment.Remove($tokenName)
+    }
     $p=[Diagnostics.Process]::Start($psi);$script:owned.Add($p)
     Require ($p.WaitForExit(240000)) 'FIXTURE_PROCESS_TIMEOUT'
     Require ($p.ExitCode -eq $Expected) ('UNEXPECTED_EXIT_' + $p.ExitCode + '_EXPECTED_' + $Expected)

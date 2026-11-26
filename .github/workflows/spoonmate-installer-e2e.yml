@@ -17,6 +17,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   nsis-e2e:
+    permissions:
+      contents: write
     if: github.repository == 'gisun5689/spoonmate'
     runs-on: windows-2025
     timeout-minutes: 30
