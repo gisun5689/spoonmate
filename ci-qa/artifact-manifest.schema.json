@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Root-reviewed SpoonMate isolated installer artifact pins",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "repository",
+    "app_id",
+    "app_guid",
+    "installer_mode",
+    "reviewed_by_root",
+    "fresh_ci_install_approved",
+    "no_application_launch",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "repository": {
+      "const": "gisun5689/spoonmate"
+    },
+    "app_id": {
+      "const": "com.spoonmate.lite"
+    },
+    "app_guid": {
+      "const": "9173b77d-41dc-5074-9fb3-f247fea6b34e"
+    },
+    "installer_mode": {
+      "const": "assisted-silent-no-force-run"
+    },
+    "reviewed_by_root": {
+      "const": true
+    },
+    "fresh_ci_install_approved": {
+      "const": true
+    },
+    "no_application_launch": {
+      "const": true
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legacy119",
+        "public120",
+        "candidate121"
+      ],
+      "properties": {
+        "legacy119": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "release_id",
+            "asset_id",
+            "tag",
+            "name",
+            "size",
+            "sha256",
+            "exe_sha256",
+            "asar_sha256",
+            "internal_version",
+            "authenticode_status"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "asset_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "tag": {
+              "const": "v2.0.15.119"
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.119_x64(?:_UNSIGNED)?\\.exe$"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1048576,
+              "maximum": 1073741824
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "asar_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "internal_version": {
+              "const": "2.0.15119"
+            },
+            "authenticode_status": {
+              "enum": [
+                "NotSigned",
+                "Valid"
+              ]
+            },
+            "exe_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "public120": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "release_id",
+            "asset_id",
+            "tag",
+            "name",
+            "size",
+            "sha256",
+            "exe_sha256",
+            "asar_sha256",
+            "internal_version",
+            "authenticode_status"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "asset_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "tag": {
+              "const": "v2.0.15.120"
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.120_x64(?:_UNSIGNED)?\\.exe$"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1048576,
+              "maximum": 1073741824
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "asar_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "internal_version": {
+              "const": "2.0.15120"
+            },
+            "authenticode_status": {
+              "enum": [
+                "NotSigned",
+                "Valid"
+              ]
+            },
+            "exe_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "candidate121": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "release_id",
+            "asset_id",
+            "tag",
+            "name",
+            "size",
+            "sha256",
+            "exe_sha256",
+            "asar_sha256",
+            "internal_version",
+            "authenticode_status"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "asset_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "tag": {
+              "const": "v2.0.15.121"
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.121_x64(?:_UNSIGNED)?\\.exe$"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1048576,
+              "maximum": 1073741824
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "asar_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "internal_version": {
+              "const": "2.0.15121"
+            },
+            "authenticode_status": {
+              "enum": [
+                "NotSigned",
+                "Valid"
+              ]
+            },
+            "exe_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}
