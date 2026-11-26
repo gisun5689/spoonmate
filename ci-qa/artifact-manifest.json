@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "repository": "gisun5689/spoonmate",
+  "app_id": "com.spoonmate.lite",
+  "app_guid": "9173b77d-41dc-5074-9fb3-f247fea6b34e",
+  "installer_mode": "assisted-silent-no-force-run",
+  "reviewed_by_root": true,
+  "fresh_ci_install_approved": true,
+  "no_application_launch": true,
+  "artifacts": {
+    "legacy119": {
+      "release_id": 459621567,
+      "asset_id": 796612705,
+      "tag": "v2.0.15.119",
+      "name": "SpoonMate_Lite_Setup_v2.0.15.119_x64_UNSIGNED.exe",
+      "size": 109944737,
+      "sha256": "7496f224f77a00911ba9b698171862d9ff61cf4a845fc8d1c920ab431b22199e",
+      "exe_sha256": "89efc2a9aba8ce9242c21a9c4f583d5ddd729a521596adab4237ca908d3b2868",
+      "asar_sha256": "a940c559dd1cdc26e211a51ca49ae80ca1fecb95ea5ddca2879b9ce7e9423813",
+      "internal_version": "2.0.15119",
+      "authenticode_status": "NotSigned"
+    },
+    "public120": {
+      "release_id": 459753575,
+      "asset_id": 797104820,
+      "tag": "v2.0.15.120",
+      "name": "SpoonMate_Lite_Setup_v2.0.15.120_x64_UNSIGNED.exe",
+      "size": 109959064,
+      "sha256": "1d341add4b3eb35984a2c580791e9eb40a2b37fe831825c11ea30ea1c0e8aad2",
+      "exe_sha256": "0ce6dd78d7f0731c892bb4bc91b05227e492b04c73b7f1809a60874180ff5f76",
+      "asar_sha256": "a9e24d1ad2b46ca058fc22df03421dcf9938ad12f82105cdc46a57426f3856f2",
+      "internal_version": "2.0.15120",
+      "authenticode_status": "NotSigned"
+    },
+    "candidate121": {
+      "release_id": 459830769,
+      "asset_id": 797410537,
+      "tag": "v2.0.15.121",
+      "name": "SpoonMate_Lite_Setup_v2.0.15.121_x64_UNSIGNED.exe",
+      "size": 109977356,
+      "sha256": "0b6aa70723323c4a3549f4edb4b8e07d6e196e899f265a3deee5550051aa5d3e",
+      "exe_sha256": "6c51a7d40b647ffcd7f809ec97dbd59a207f3528c35ad8b899fd259f2ac1bc7f",
+      "asar_sha256": "352c753fdeab1bf494f81ceef39449221afcb629b3194ec0adfbbe06b722b74d",
+      "internal_version": "2.0.15121",
+      "authenticode_status": "NotSigned"
+    }
+  }
+}
