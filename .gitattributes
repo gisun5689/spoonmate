@@ -1,0 +1,5 @@
+.github/workflows/spoonmate-installer-e2e.yml -text
+ci-qa/Invoke-InstallerE2E.ps1 -text
+ci-qa/artifact-manifest.schema.json -text
+ci-qa/README.md -text
+ci-qa/artifact-manifest.json -text
