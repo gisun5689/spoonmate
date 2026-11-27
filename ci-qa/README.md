@@ -25,7 +25,7 @@ runner. A local /D=temp installation is NOT isolation.
 Each of legacy119, public122 and candidate123 requires: release ID, asset ID,
 exact tag/name/size, installer SHA-256, installed main EXE SHA-256, packaged app.asar SHA-256, internal version
 and actual Authenticode status. All properties are schema-checked. Release 119
-must remain a draft, 123 must be the currently published latest release and 124
+must remain a draft, 124 must be the currently published latest release and 125
 must remain a draft. Protected DEV code, account information and tokens are not
 part of this manifest or the scripts.
 
@@ -34,17 +34,20 @@ api.github.com. Asset redirects are validated and followed using a separate
 client with no authorization header. URLs, redirect query strings and credentials
 are never written to proof.
 
-## Five mandatory cases, no skips
+## Six mandatory cases, no skips
 
-1. Actual 119 installation followed by actual 124 silent upgrade; exact version,
+1. Actual 119 installation followed by actual 125 silent upgrade; exact version,
    main EXE and app.asar hashes, registry target and synthetic user-data sentinel verified.
-2. Actual 124 uninstall; installation/registry removed and sentinel retained.
+2. Actual 125 uninstall; installation/registry removed and sentinel retained.
 3. Actual 119 old uninstaller copied outside the install root and run with the
    same update/data-preservation arguments while app.asar denies delete sharing.
    Exit 2 and the exact restored old-file manifest are mandatory.
-4. Release the synthetic file lock, rerun actual 124 installation, require exit 0
+4. Release the synthetic file lock, rerun actual 125 installation, require exit 0
    and verify the exact new version/hash and unchanged sentinel.
 5. Actual final uninstall with the same strict checks.
+6. Actual current-public 124 installation followed by actual 125 silent upgrade;
+   verify both pinned versions, main EXE/ASAR hashes, unchanged synthetic data,
+   and successful final cleanup. This is not inferred from downloading 124.
 
 The lock case invokes the real old uninstaller directly. It deliberately does
 not automate the parent installer's modal error dialog; that dialog/launcher
@@ -55,12 +58,14 @@ are still exercised by the same real NSIS uninstaller.
 
 This suite never launches SpoonMate, never passes --force-run and never uses an
 owner account or license. Assisted silent NSIS only launches the application
-when force-run is explicitly requested. The downloaded public 123 bytes are
-verified, but actual 119 startup-auto-update to 123 is NOT exercised or claimed:
+when force-run is explicitly requested. Public 124 bytes are downloaded,
+hash-verified and installed for the separate sixth 124-to-125 upgrade case.
+Actual 119 startup-auto-update to 124 is NOT exercised or claimed:
 that needs an independently approved way to guarantee zero provider calls.
 
-A successful summary requires exactly five passed cases, zero failed cases and
-zero skipped cases. The app runtime, physical audio, OAuth, server events and
+A successful summary requires exactly six passed cases, zero failed cases and
+zero skipped cases, plus actual_previous_upgrade_from=2.0.15.124 and
+actual_previous_upgrade_verified=true backed by the sixth case. The app runtime, physical audio, OAuth, server events and
 real-user data are not proven by this installer-only suite.
 
 The installation path has the exact Unicode/spaces shape
