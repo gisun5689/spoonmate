@@ -21,18 +21,6 @@
       "authenticode_status": "NotSigned"
     },
     "public122": {
-      "release_id": 460030087,
-      "asset_id": 798294639,
-      "tag": "v2.0.15.123",
-      "name": "SpoonMate_Lite_Setup_v2.0.15.123_x64_UNSIGNED.exe",
-      "size": 109989532,
-      "sha256": "020b196a750f94529b7b8d2beeecaa23e6780e16215edd7df70863de2202ba4d",
-      "exe_sha256": "fa657ddf5918d16a6242218d0e7b8563a9aaae4f26d008930934370288aa4513",
-      "asar_sha256": "3f43d901761b364aab9187852391eb24d097314f9d7f71a7bc4e41c43cf66a64",
-      "internal_version": "2.0.15123",
-      "authenticode_status": "NotSigned"
-    },
-    "candidate123": {
       "release_id": 460374803,
       "asset_id": 799787185,
       "tag": "v2.0.15.124",
@@ -42,6 +30,18 @@
       "exe_sha256": "11804031e0a3de6c105e48efb938ee982ce548c68f8eb785e01b4b9bac37d30b",
       "asar_sha256": "39977a5cce7ce6a81defe8f4f559d836c50b5e4d1051b71b048c97c6fd202677",
       "internal_version": "2.0.15124",
+      "authenticode_status": "NotSigned"
+    },
+    "candidate123": {
+      "release_id": 460639971,
+      "asset_id": 800621956,
+      "tag": "v2.0.15.125",
+      "name": "SpoonMate_Lite_Setup_v2.0.15.125_x64_UNSIGNED.exe",
+      "size": 110022511,
+      "sha256": "5a1a6dfdec143de711bc86b38162a48b5711e1ca5d28e280cf9a2ace6371868a",
+      "exe_sha256": "f1b68ed44731486c3167772d63b9c730f7c37d29646d1160a4012268e91dd70b",
+      "asar_sha256": "f5f075c5ac0ddbf5486899050f39dbbfdeb50425f52d7d54372e40dd79d145d5",
+      "internal_version": "2.0.15125",
       "authenticode_status": "NotSigned"
     }
   }
