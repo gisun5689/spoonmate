@@ -157,17 +157,17 @@ try {
     $assetHandler=[Net.Http.HttpClientHandler]::new();$assetHandler.AllowAutoRedirect=$false
     $script:assetClient=[Net.Http.HttpClient]::new($assetHandler);$script:assetClient.Timeout=[TimeSpan]::FromMinutes(10)
     $latest=GetApi '/repos/gisun5689/spoonmate/releases/latest'
-    Require ($latest.id -eq $m.artifacts.public121.release_id -and $latest.tag_name -ceq 'v2.0.15.121') 'PUBLISHED_BASELINE_CHANGED'
+    Require ($latest.id -eq $m.artifacts.public122.release_id -and $latest.tag_name -ceq 'v2.0.15.122') 'PUBLISHED_BASELINE_CHANGED'
     $v119=DownloadPinned $m.artifacts.legacy119 $true
-    $v121=DownloadPinned $m.artifacts.public121 $false
-    $v122=DownloadPinned $m.artifacts.candidate122 $true
+    $v121=DownloadPinned $m.artifacts.public122 $false
+    $v122=DownloadPinned $m.artifacts.candidate123 $true
     $dataRoot=Join-Path $env:APPDATA 'spoonmate-sun-assistant';New-Item -ItemType Directory -Path $dataRoot -ErrorAction Stop | Out-Null
     $script:sentinel=Join-Path $dataRoot ('e2e-sentinel-'+$env:GITHUB_RUN_ID+'.txt');[IO.File]::WriteAllText($script:sentinel,'synthetic-user-data-'+$env:GITHUB_RUN_ID)
     $script:sentinelHash=Hash $script:sentinel
     $script:phase='clean-upgrade'
     RunFixture $v119 ('/S /currentuser /D='+$script:install) 0 | Out-Null;Installed $m.artifacts.legacy119
-    RunFixture $v122 ('/S /currentuser /D='+$script:install) 0 | Out-Null;Installed $m.artifacts.candidate122
-    Record 'actual-119-to-122-clean-upgrade' @{exit_code=0;version=$m.artifacts.candidate122.internal_version;data_unchanged=$true}
+    RunFixture $v122 ('/S /currentuser /D='+$script:install) 0 | Out-Null;Installed $m.artifacts.candidate123
+    Record 'actual-119-to-123-clean-upgrade' @{exit_code=0;version=$m.artifacts.candidate123.internal_version;data_unchanged=$true}
     UninstallFixture;Record 'clean-uninstall-preserves-synthetic-data' @{exit_code=0}
     $script:phase='locked-old-uninstaller'
     RunFixture $v119 ('/S /currentuser /D='+$script:install) 0 | Out-Null;Installed $m.artifacts.legacy119
@@ -181,8 +181,8 @@ try {
     } finally { $lock.Dispose() }
     Record 'actual-old-uninstaller-exit2-preserves-exact-manifest' @{exit_code=2;rollback_exact=$true;lock='exclusive-delete-sharing-denied'}
     $script:phase='retry-upgrade'
-    RunFixture $v122 ('/S /currentuser /D='+$script:install) 0 | Out-Null;Installed $m.artifacts.candidate122
-    Record 'actual-122-retry-after-lock-release' @{exit_code=0;data_unchanged=$true}
+    RunFixture $v122 ('/S /currentuser /D='+$script:install) 0 | Out-Null;Installed $m.artifacts.candidate123
+    Record 'actual-123-retry-after-lock-release' @{exit_code=0;data_unchanged=$true}
     UninstallFixture;Record 'final-uninstall-removes-only-fixture-installation' @{exit_code=0;registry_removed=$true;data_unchanged=$true}
     Require ($script:checks.Count -eq 5) 'REQUIRED_CASE_COUNT_MISMATCH'
     $script:failure='';$script:code=0
@@ -195,9 +195,10 @@ try {
     if (Get-Variable api -Scope Script -ErrorAction SilentlyContinue) { $script:api.Dispose() }
     if (Get-Variable assetClient -Scope Script -ErrorAction SilentlyContinue) { $script:assetClient.Dispose() }
     if ($script:root -and (Test-Path -LiteralPath (Join-Path $script:root 'proofs'))) {
-        $proof=[ordered]@{success=($script:code -eq 0);phase=$script:phase;failure_code=$script:failure;required_cases=5;passed=$script:checks.Count;failed=if($script:code -eq 0){0}else{1};skipped=0;checks=$script:checks;assets=$script:assetProof;actual_nsis_installation=($script:installationAttempts -gt 0);install_path_shape='OneDrive\바탕 화면\SpoonMate LITE v2.0.15.32';real_onedrive_sync_exercised=$false;application_launch_exercised=$false;startup_auto_119_to_public121_exercised=$false;public121_download_verified_only=(@($script:assetProof | Where-Object tag -CEQ 'v2.0.15.121').Count -eq 1);real_user_account_used=$false;local_pc_access=$false;fixture_run_id=$env:GITHUB_RUN_ID;commit=$ExpectedCommit}
+        $proof=[ordered]@{success=($script:code -eq 0);phase=$script:phase;failure_code=$script:failure;required_cases=5;passed=$script:checks.Count;failed=if($script:code -eq 0){0}else{1};skipped=0;checks=$script:checks;assets=$script:assetProof;actual_nsis_installation=($script:installationAttempts -gt 0);install_path_shape='OneDrive\바탕 화면\SpoonMate LITE v2.0.15.32';real_onedrive_sync_exercised=$false;application_launch_exercised=$false;startup_auto_119_to_public122_exercised=$false;public122_download_verified_only=(@($script:assetProof | Where-Object tag -CEQ 'v2.0.15.122').Count -eq 1);real_user_account_used=$false;local_pc_access=$false;fixture_run_id=$env:GITHUB_RUN_ID;commit=$ExpectedCommit}
         $proof | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $script:root 'proofs\summary.json')
     }
     Write-Host ('SpoonMate NSIS E2E: '+ $(if($script:code -eq 0){'PASS'}else{'FAILED '+$script:failure}) + '; passed='+$script:checks.Count+'; skipped=0')
 }
 exit $script:code
+

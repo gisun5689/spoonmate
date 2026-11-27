@@ -3,7 +3,7 @@
 This directory is a review artifact. It is not an active workflow and must not be
 run against a developer PC. No manifest containing guessed asset IDs or hashes is
 provided. Root must supply the reviewed artifact-manifest.json using the included
-schema after the actual v122 candidate draft exists.
+schema after the actual v123 candidate draft exists.
 
 ## Activation boundary
 
@@ -22,10 +22,10 @@ runner. A local /D=temp installation is NOT isolation.
 
 ## Required artifact pins
 
-Each of legacy119, public121 and candidate122 requires: release ID, asset ID,
+Each of legacy119, public122 and candidate123 requires: release ID, asset ID,
 exact tag/name/size, installer SHA-256, installed main EXE SHA-256, packaged app.asar SHA-256, internal version
 and actual Authenticode status. All properties are schema-checked. Release 119
-must remain a draft, 121 must be the currently published latest release and 122
+must remain a draft, 122 must be the currently published latest release and 123
 must remain a draft. Protected DEV code, account information and tokens are not
 part of this manifest or the scripts.
 
@@ -36,13 +36,13 @@ are never written to proof.
 
 ## Five mandatory cases, no skips
 
-1. Actual 119 installation followed by actual 122 silent upgrade; exact version,
+1. Actual 119 installation followed by actual 123 silent upgrade; exact version,
    main EXE and app.asar hashes, registry target and synthetic user-data sentinel verified.
-2. Actual 122 uninstall; installation/registry removed and sentinel retained.
+2. Actual 123 uninstall; installation/registry removed and sentinel retained.
 3. Actual 119 old uninstaller copied outside the install root and run with the
    same update/data-preservation arguments while app.asar denies delete sharing.
    Exit 2 and the exact restored old-file manifest are mandatory.
-4. Release the synthetic file lock, rerun actual 122 installation, require exit 0
+4. Release the synthetic file lock, rerun actual 123 installation, require exit 0
    and verify the exact new version/hash and unchanged sentinel.
 5. Actual final uninstall with the same strict checks.
 
@@ -55,8 +55,8 @@ are still exercised by the same real NSIS uninstaller.
 
 This suite never launches SpoonMate, never passes --force-run and never uses an
 owner account or license. Assisted silent NSIS only launches the application
-when force-run is explicitly requested. The downloaded public 121 bytes are
-verified, but actual 119 startup-auto-update to 121 is NOT exercised or claimed:
+when force-run is explicitly requested. The downloaded public 122 bytes are
+verified, but actual 119 startup-auto-update to 122 is NOT exercised or claimed:
 that needs an independently approved way to guarantee zero provider calls.
 
 A successful summary requires exactly five passed cases, zero failed cases and
@@ -83,3 +83,4 @@ GitHub-hosted job finishes and its strict summary is checked.
 
 Official NSIS exit-level reference:
 https://nsis.sourceforge.io/Docs/AppendixD.html
+
