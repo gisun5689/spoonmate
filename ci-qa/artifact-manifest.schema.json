@@ -132,11 +132,11 @@
               "minimum": 1
             },
             "tag": {
-              "const": "v2.0.15.125"
+              "const": "v2.0.15.126"
             },
             "name": {
               "type": "string",
-              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.125_x64(?:_UNSIGNED)?\\.exe$"
+              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.126_x64(?:_UNSIGNED)?\\.exe$"
             },
             "size": {
               "type": "integer",
@@ -152,7 +152,7 @@
               "pattern": "^[a-f0-9]{64}$"
             },
             "internal_version": {
-              "const": "2.0.15125"
+              "const": "2.0.15126"
             },
             "authenticode_status": {
               "enum": [
@@ -191,11 +191,11 @@
               "minimum": 1
             },
             "tag": {
-              "const": "v2.0.15.126"
+              "const": "v2.0.15.127"
             },
             "name": {
               "type": "string",
-              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.126_x64(?:_UNSIGNED)?\\.exe$"
+              "pattern": "^SpoonMate_Lite_Setup_v2\\.0\\.15\\.127_x64(?:_UNSIGNED)?\\.exe$"
             },
             "size": {
               "type": "integer",
@@ -211,7 +211,7 @@
               "pattern": "^[a-f0-9]{64}$"
             },
             "internal_version": {
-              "const": "2.0.15126"
+              "const": "2.0.15127"
             },
             "authenticode_status": {
               "enum": [
@@ -229,3 +229,4 @@
     }
   }
 }
+
